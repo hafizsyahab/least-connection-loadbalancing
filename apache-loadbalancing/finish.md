@@ -12,8 +12,7 @@ In this scenario you have:
 ✅ Understood load balancing architecture
 ✅ Installed Apache Web Server on 3 nodes
 ✅ Configured Apache with unique pages
-✅ Installed and configured HAProxy
-   with Least Connection method
+✅ Installed and configured HAProxy with Least Connection method
 ✅ Performed load testing using Apache JMeter
 ```
 
