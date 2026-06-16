@@ -91,7 +91,7 @@ backend my_backend
     server server3 localhost:8083 check
 
 listen stats
-    bind *:8081
+    bind *:9000
     stats enable
     stats uri /stats
     stats auth admin:admin
