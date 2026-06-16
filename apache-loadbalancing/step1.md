@@ -2,55 +2,95 @@
 
 ## What Are We Building?
 
-In this scenario, we will build a load balancing
-architecture with **5 nodes**:
+In this scenario, we build a load balancing
+architecture based on real research using
+**HAProxy** with **Least Connection** method.
 
 ```
-Client (JMeter)
-      ↓
-   HAProxy (Load Balancer)
-   ↓        ↓        ↓
-apache1   apache2   apache3
+Client (JMeter - 192.168.100.9)
+            ↓
+   HAProxy (192.168.100.10)
+   Load Balancer - Least Connection
+   ↓            ↓            ↓
+Apache1      Apache2      Apache3
+(192.168.100.11) (192.168.100.12) (192.168.100.13)
 ```
 
-## Components
+## Load Balancing Algorithms
 
-| Node | Function |
+### Static Algorithms
+Static algorithms distribute requests without
+considering the current server load.
+
+| Method | Description |
 |---|---|
-| apache1 | Web Server 1 |
-| apache2 | Web Server 2 |
-| apache3 | Web Server 3 |
-| haproxy | Load Balancer |
-| jmeter | Load Testing Client |
+| Round Robin | Distributes requests to each server in fixed rotation. Best when all servers have equal capacity. |
+| Weighted Round Robin | Same as Round Robin but gives more requests to servers with higher capacity. |
+| IP Hash | Directs requests based on client IP hash. Same IP always goes to the same server — useful for session persistence. |
 
-## Load Balancing Methods
+### Dynamic Algorithms
+Dynamic algorithms consider the current server
+condition before distributing requests.
 
-### Least Connection
-Least Connection is a dynamic load balancing algorithm
+| Method | Description |
+|---|---|
+| Least Connection | Sends requests to server with fewest active connections. Best for varying connection times. |
+| Weighted Least Connection | Same as Least Connection but considers server capacity. |
+| Least Response Time | Sends requests to server with fastest response time. |
+| Resource Based | Distributes based on available server resources (CPU, RAM). |
+
+## Why Least Connection?
+
+Least Connection is a **dynamic load balancing algorithm**
 that checks which server has the fewest active connections
-and sends the request to that server.
-This method is well-suited for servers that often have
-varying connection times. It also provides stable
-performance on systems with unpredictable traffic.
+and sends new requests to that server.
 
-### Round Robin
-Round Robin distributes requests to each server
-in a fixed rotation. After the last server receives
-a request, distribution returns to the first server.
-This method is simple and works best when all servers
-have relatively equal capacity.
+This method is well-suited because:
+- Each request may have **different processing times**
+- Traffic load is **unpredictable**
+- Provides **stable performance** on high-traffic systems
 
-### IP Hash
-IP Hash determines the target server based on
-a hash of the client's IP address. Users with
-the same IP will always be directed to the same server.
-This method is useful for session persistence
-since users won't be moved to another server
-as long as their IP doesn't change.
+## How Least Connection Works
 
-## Why We Use Least Connection
+```
+New request arrives at HAProxy
+            ↓
+HAProxy checks active connections:
+apache1 → 5 connections
+apache2 → 2 connections  ← least!
+apache3 → 4 connections
+            ↓
+Request sent to apache2
+            ↓
+After request done, connection count updates
+            ↓
+Next request → HAProxy checks again
+```
 
-In this scenario, we use **Least Connection** because:
-- Each request may have different processing times
-- Traffic load is unpredictable
-- We need stable and efficient performance
+## Network Configuration
+
+| Platform | How IP is Configured |
+|---|---|
+| VM / VMware (this research) | Static IP via Netplan |
+| Killercoda | Automatic per node |
+| AWS | VPC / Elastic IP |
+| Azure | Virtual Network (VNet) |
+| GCP | VPC Network |
+
+## On Real VM (VMware)
+```bash
+sudo nano /etc/netplan/01-network-manager-all.yaml
+sudo netplan apply
+```
+
+## On This Killercoda Scenario
+No IP configuration needed!
+Each node connects automatically using its hostname.
+
+| Node | Hostname |
+|---|---|
+| Web Server 1 | apache1 |
+| Web Server 2 | apache2 |
+| Web Server 3 | apache3 |
+| Load Balancer | haproxy |
+| Load Testing | jmeter |
