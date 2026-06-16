@@ -26,7 +26,8 @@
         "name": "jmeter",
         "script": "background-jmeter.sh"
       }
-    ]
+    ],
+    "uilayout": "terminal-terminal"
   },
   "details": {
     "intro": {
