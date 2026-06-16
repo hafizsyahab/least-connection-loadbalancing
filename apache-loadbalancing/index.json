@@ -7,19 +7,24 @@
   "environment": {
     "nodes": [
       {
-        "name": "apache1"
+        "name": "apache1",
+        "script": "background-apache1.sh"
       },
       {
-        "name": "apache2"
+        "name": "apache2",
+        "script": "background-apache2.sh"
       },
       {
-        "name": "apache3"
+        "name": "apache3",
+        "script": "background-apache3.sh"
       },
       {
-        "name": "haproxy"
+        "name": "haproxy",
+        "script": "background-haproxy.sh"
       },
       {
-        "name": "jmeter"
+        "name": "jmeter",
+        "script": "background-jmeter.sh"
       }
     ]
   },
