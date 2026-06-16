@@ -1,5 +1,4 @@
-# Load Balancing Analysis in Cloud Computing
-# Using the Least Connection Method
+#  Analysis Load Balancing in Cloud Computing Using the Least Connection Method
 
 ## Welcome!
 
