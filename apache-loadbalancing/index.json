@@ -2,61 +2,24 @@
   "title": "Load Balancing with HAProxy using Least Connection Method",
   "description": "Tutorial to setup 3 Apache servers with HAProxy as load balancer and Apache JMeter for testing",
   "backend": {
-    "imageid": "ubuntu"
-  },
-  "environment": {
+    "imageid": "ubuntu",
     "nodes": [
-      {
-        "name": "apache1",
-        "script": "background-apache1.sh"
-      },
-      {
-        "name": "apache2",
-        "script": "background-apache2.sh"
-      },
-      {
-        "name": "apache3",
-        "script": "background-apache3.sh"
-      },
-      {
-        "name": "haproxy",
-        "script": "background-haproxy.sh"
-      },
-      {
-        "name": "jmeter",
-        "script": "background-jmeter.sh"
-      }
-    ],
-    "uilayout": "terminal-terminal"
+      {"name": "apache1"},
+      {"name": "apache2"},
+      {"name": "apache3"},
+      {"name": "haproxy"},
+      {"name": "jmeter"}
+    ]
   },
   "details": {
-    "intro": {
-      "text": "intro.md"
-    },
+    "intro": {"text": "intro.md"},
     "steps": [
-      {
-        "title": "Architecture Overview",
-        "text": "step1.md"
-      },
-      {
-        "title": "Install Apache Web Server",
-        "text": "step2.md"
-      },
-      {
-        "title": "Configure Apache",
-        "text": "step3.md"
-      },
-      {
-        "title": "Install and Configure HAProxy",
-        "text": "step4.md"
-      },
-      {
-        "title": "Install Apache JMeter and Testing",
-        "text": "step5.md"
-      }
+      {"title": "Architecture Overview", "text": "step1.md"},
+      {"title": "Install Apache Web Server", "text": "step2.md"},
+      {"title": "Configure Apache", "text": "step3.md"},
+      {"title": "Install and Configure HAProxy", "text": "step4.md"},
+      {"title": "Install Apache JMeter and Testing", "text": "step5.md"}
     ],
-    "finish": {
-      "text": "finish.md"
-    }
+    "finish": {"text": "finish.md"}
   }
 }
