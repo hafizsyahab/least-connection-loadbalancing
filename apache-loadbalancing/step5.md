@@ -71,13 +71,14 @@ jmeter --version
 In the original research, testing was conducted
 with gradually increasing number of users:
 
-| Test | Number of Users | Ramp-up Period |
-|---|---|---|
-| Test 1 | 10 users | 1 second |
-| Test 2 | 100 users | 1 second |
-| Test 3 | 300 users | 1 second |
-| Test 4 | 500 users | 1 second |
-| Test 5 | 750 users | 1 second |
+| No | Thread User | Ramp-Up (s) | Duration (s) | Start Delay (s) | Loop Count |
+|---|---|---|---|---|---|
+| 1 | 10 | 10 | 60 | 2 | Infinite |
+| 2 | 100 | 5 | 180 | 2 | Infinite |
+| 3 | 300 | 3 | 300 | 2 | Infinite |
+| 4 | 500 | 2 | 480 | 2 | Infinite |
+| 5 | 750 | 1 | 600 | 2 | Infinite |
+| 6 | 1000 | 1 | 900 | 2 | Infinite |
 
 ## 4. Run JMeter Test
 
