@@ -94,27 +94,44 @@ EOF
 systemctl restart haproxy
 systemctl enable haproxy
 
-# Setup tmux windows
-cat > /root/start-lab.sh << 'EOF'
-#!/bin/bash
-tmux new-session -d -s lab -n "apache1"
-tmux send-keys -t lab:apache1 "echo '=== Apache Server 1 - Port 8081 ==='; curl http://localhost:8081" Enter
+# ===========================
+# Install JMeter
+# ===========================
+apt-get install -y default-jdk wget
 
-tmux new-window -t lab -n "apache2"
-tmux send-keys -t lab:apache2 "echo '=== Apache Server 2 - Port 8082 ==='; curl http://localhost:8082" Enter
+wget -q https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.3.tgz
+tar -xzf apache-jmeter-5.6.3.tgz -C /opt/
+ln -s /opt/apache-jmeter-5.6.3/bin/jmeter /usr/local/bin/jmeter
 
-tmux new-window -t lab -n "apache3"
-tmux send-keys -t lab:apache3 "echo '=== Apache Server 3 - Port 8083 ==='; curl http://localhost:8083" Enter
-
-tmux new-window -t lab -n "haproxy"
-tmux send-keys -t lab:haproxy "echo '=== HAProxy Load Balancer - Port 80 ==='; systemctl status haproxy" Enter
-
-tmux new-window -t lab -n "jmeter"
-tmux send-keys -t lab:jmeter "echo '=== JMeter Load Testing ==='" Enter
-
-tmux attach -t lab
+# Buat test plan JMeter
+cat > /root/testplan.jmx << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0">
+  <hashTree>
+    <TestPlan testname="Load Balancing Test" enabled="true">
+      <hashTree>
+        <ThreadGroup testname="Users" enabled="true"
+          num_threads="10"
+          ramp_time="10"
+          duration="60"
+          delay="2">
+          <hashTree>
+            <HTTPSamplerProxy testname="HTTP Request"
+              enabled="true"
+              domain="localhost"
+              port="80"
+              path="/"
+              method="GET">
+              <hashTree/>
+            </HTTPSamplerProxy>
+          </hashTree>
+        </ThreadGroup>
+      </hashTree>
+    </TestPlan>
+  </hashTree>
+</jmeterTestPlan>
 EOF
 
-chmod +x /root/start-lab.sh
-
-echo "Setup complete! Run: /root/start-lab.sh"
+echo "Setup complete!"
+echo "JMeter test plan ready at /root/testplan.jmx"
+echo "Run JMeter: jmeter -n -t /root/testplan.jmx -l /root/results.jtl"
