@@ -9,7 +9,7 @@ apt-get install -y apache2 haproxy
 # Port 8081
 # ===========================
 cat > /etc/apache2/sites-available/server1.conf << 'EOF'
-<VirtualHost *:8081>
+<VirtualHost *:80>
     DocumentRoot /var/www/server1
 </VirtualHost>
 EOF
@@ -27,7 +27,7 @@ EOF
 # Port 8082
 # ===========================
 cat > /etc/apache2/sites-available/server2.conf << 'EOF'
-<VirtualHost *:8082>
+<VirtualHost *:80>
     DocumentRoot /var/www/server2
 </VirtualHost>
 EOF
@@ -45,7 +45,7 @@ EOF
 # Port 8083
 # ===========================
 cat > /etc/apache2/sites-available/server3.conf << 'EOF'
-<VirtualHost *:8083>
+<VirtualHost *:80>
     DocumentRoot /var/www/server3
 </VirtualHost>
 EOF
@@ -59,9 +59,9 @@ cat > /var/www/server3/index.html << 'EOF'
 EOF
 
 # Enable ports
-echo "Listen 8081
-Listen 8082
-Listen 8083" >> /etc/apache2/ports.conf
+echo "Listen 80
+Listen 80
+Listen 80" >> /etc/apache2/ports.conf
 
 # Enable sites
 a2ensite server1.conf server2.conf server3.conf
@@ -86,9 +86,9 @@ frontend my_frontend
 
 backend my_backend
     balance leastconn
-    server server1 localhost:81 check
-    server server2 localhost:82 check
-    server server3 localhost:83 check
+    server server1 localhost:80 check
+    server server2 localhost:80 check
+    server server3 localhost:80 check
 
 listen stats
     bind :8081
