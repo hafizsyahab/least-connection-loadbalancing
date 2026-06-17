@@ -59,3 +59,17 @@ Apache is installed on nodes:
 
 Each node automatically serves a different page
 to help identify which server is responding!
+
+## Start Lab Environment
+
+Run this command to open all server windows:
+```bash
+/root/start-lab.sh
+```
+
+Switch between servers:
+- `Ctrl+B` then `1` → Apache Server 1
+- `Ctrl+B` then `2` → Apache Server 2
+- `Ctrl+B` then `3` → Apache Server 3
+- `Ctrl+B` then `4` → HAProxy
+- `Ctrl+B` then `5` → JMeter
