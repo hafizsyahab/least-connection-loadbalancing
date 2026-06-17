@@ -68,3 +68,30 @@ global
     log /dev/log local0
 
 defaults
+    mode http
+    timeout client 5s
+    timeout connect 10s
+    timeout server 10s
+    timeout http-request 10s
+
+frontend my_frontend
+    bind *:80
+    default_backend my_backend
+
+backend my_backend
+    balance leastconn
+    server server1 localhost:8081 check
+    server server2 localhost:8082 check
+    server server3 localhost:8083 check
+
+listen stats
+    bind *:9000
+    stats enable
+    stats uri /stats
+    stats auth admin:admin
+EOF
+
+systemctl restart haproxy
+systemctl enable haproxy
+
+echo "Setup complete!"
