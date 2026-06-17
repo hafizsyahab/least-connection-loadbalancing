@@ -81,17 +81,17 @@ defaults
     timeout http-request 10s
 
 frontend my_frontend
-    bind *:80
+    bind localhost:80
     default_backend my_backend
 
 backend my_backend
     balance leastconn
-    server server1 localhost:8081 check
-    server server2 localhost:8082 check
-    server server3 localhost:8083 check
+    server server1 localhost:80 check
+    server server2 localhost:80 check
+    server server3 localhost:80 check
 
 listen stats
-    bind *:9000
+    bind :8081
     stats enable
     stats uri /stats
     stats auth admin:admin
