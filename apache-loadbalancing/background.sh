@@ -86,9 +86,9 @@ frontend my_frontend
 
 backend my_backend
     balance leastconn
-    server server1 localhost:80 check
-    server server2 localhost:80 check
-    server server3 localhost:80 check
+    server server1 localhost:81 check
+    server server2 localhost:82 check
+    server server3 localhost:83 check
 
 listen stats
     bind :8081
