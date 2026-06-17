@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get update -y
-apt-get install -y apache2 haproxy
+apt-get install -y apache2 haproxy tmux
 
 # Hapus Listen 80 dari ports.conf
 sed -i 's/Listen 80/# Listen 80/' /etc/apache2/ports.conf
@@ -94,4 +94,27 @@ EOF
 systemctl restart haproxy
 systemctl enable haproxy
 
-echo "Setup complete!"
+# Setup tmux windows
+cat > /root/start-lab.sh << 'EOF'
+#!/bin/bash
+tmux new-session -d -s lab -n "apache1"
+tmux send-keys -t lab:apache1 "echo '=== Apache Server 1 - Port 8081 ==='; curl http://localhost:8081" Enter
+
+tmux new-window -t lab -n "apache2"
+tmux send-keys -t lab:apache2 "echo '=== Apache Server 2 - Port 8082 ==='; curl http://localhost:8082" Enter
+
+tmux new-window -t lab -n "apache3"
+tmux send-keys -t lab:apache3 "echo '=== Apache Server 3 - Port 8083 ==='; curl http://localhost:8083" Enter
+
+tmux new-window -t lab -n "haproxy"
+tmux send-keys -t lab:haproxy "echo '=== HAProxy Load Balancer - Port 80 ==='; systemctl status haproxy" Enter
+
+tmux new-window -t lab -n "jmeter"
+tmux send-keys -t lab:jmeter "echo '=== JMeter Load Testing ==='" Enter
+
+tmux attach -t lab
+EOF
+
+chmod +x /root/start-lab.sh
+
+echo "Setup complete! Run: /root/start-lab.sh"
