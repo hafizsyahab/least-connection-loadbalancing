@@ -1,19 +1,22 @@
 #!/bin/bash
 
-# Update system
 apt-get update -y
 apt-get install -y apache2 haproxy
 
-# ===========================
-# Setup Apache - Server 1
-# Port 8081
-# ===========================
+# Hapus Listen 80 dari ports.conf
+sed -i 's/Listen 80/# Listen 80/' /etc/apache2/ports.conf
+
+# Tambah port 8081, 8082, 8083
+echo "Listen 8081
+Listen 8082
+Listen 8083" >> /etc/apache2/ports.conf
+
+# Setup Server 1 - Port 8081
 cat > /etc/apache2/sites-available/server1.conf << 'EOF'
-<VirtualHost *:80>
+<VirtualHost *:8081>
     DocumentRoot /var/www/server1
 </VirtualHost>
 EOF
-
 mkdir -p /var/www/server1
 cat > /var/www/server1/index.html << 'EOF'
 <html>
@@ -22,16 +25,12 @@ cat > /var/www/server1/index.html << 'EOF'
 </html>
 EOF
 
-# ===========================
-# Setup Apache - Server 2
-# Port 8082
-# ===========================
+# Setup Server 2 - Port 8082
 cat > /etc/apache2/sites-available/server2.conf << 'EOF'
-<VirtualHost *:80>
+<VirtualHost *:8082>
     DocumentRoot /var/www/server2
 </VirtualHost>
 EOF
-
 mkdir -p /var/www/server2
 cat > /var/www/server2/index.html << 'EOF'
 <html>
@@ -40,16 +39,12 @@ cat > /var/www/server2/index.html << 'EOF'
 </html>
 EOF
 
-# ===========================
-# Setup Apache - Server 3
-# Port 8083
-# ===========================
+# Setup Server 3 - Port 8083
 cat > /etc/apache2/sites-available/server3.conf << 'EOF'
-<VirtualHost *:80>
+<VirtualHost *:8083>
     DocumentRoot /var/www/server3
 </VirtualHost>
 EOF
-
 mkdir -p /var/www/server3
 cat > /var/www/server3/index.html << 'EOF'
 <html>
@@ -58,10 +53,8 @@ cat > /var/www/server3/index.html << 'EOF'
 </html>
 EOF
 
-# Enable ports
-echo "Listen 80
-Listen 80
-Listen 80" >> /etc/apache2/ports.conf
+# Disable default site
+a2dissite 000-default.conf
 
 # Enable sites
 a2ensite server1.conf server2.conf server3.conf
@@ -69,35 +62,9 @@ a2ensite server1.conf server2.conf server3.conf
 # Restart Apache
 systemctl restart apache2
 
-# ===========================
 # Setup HAProxy
-# ===========================
 cat > /etc/haproxy/haproxy.cfg << 'EOF'
+global
+    log /dev/log local0
+
 defaults
-    mode http
-    timeout client 5s
-    timeout connect 10s
-    timeout server 10s
-    timeout http-request 10s
-
-frontend my_frontend
-    bind localhost:80
-    default_backend my_backend
-
-backend my_backend
-    balance leastconn
-    server server1 localhost:80 check
-    server server2 localhost:80 check
-    server server3 localhost:80 check
-
-listen stats
-    bind :8081
-    stats enable
-    stats uri /stats
-    stats auth admin:admin
-EOF
-
-systemctl restart haproxy
-systemctl enable haproxy
-
-echo "Setup complete!"
