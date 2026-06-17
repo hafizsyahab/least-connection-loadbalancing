@@ -68,29 +68,30 @@ Next request → HAProxy checks again
 ```
 
 ## Network Configuration
-
-| Platform | How IP is Configured |
-|---|---|
-| VM / VMware (this research) | Static IP via Netplan |
-| Killercoda | Automatic per node |
-| AWS | VPC / Elastic IP |
-| Azure | Virtual Network (VNet) |
-| GCP | VPC Network |
-
+| Platform | How IP is Configured | Status |
+|---|---|---|
+| VM / VMware (this research) | Static IP via Netplan | ✅ Tested |
+| Killercoda - Single Node | All services on 1 server, different ports | ✅ Tested & Working |
+| Killercoda - Multi Node | Each node gets separate IP automatically | ⚠️ Not yet tested |
+| AWS | VPC / Elastic IP | ⚠️ Not yet tested |
+| Azure | Virtual Network (VNet) | ⚠️ Not yet tested |
+| GCP | VPC Network | ⚠️ Not yet tested |
 ## On Real VM (VMware)
 ```bash
 sudo nano /etc/netplan/01-network-manager-all.yaml
 sudo netplan apply
 ```
 
-## On This Killercoda Scenario
-No IP configuration needed!
-Each node connects automatically using its hostname.
+## On This Killercoda Scenario (Single Node)
 
-| Node | Hostname |
+All services run on **1 server** using different ports:
+
+| Service | Port |
 |---|---|
-| Web Server 1 | apache1 |
-| Web Server 2 | apache2 |
-| Web Server 3 | apache3 |
-| Load Balancer | haproxy |
-| Load Testing | jmeter |
+| Apache Server 1 | 8081 |
+| Apache Server 2 | 8082 |
+| Apache Server 3 | 8083 |
+| HAProxy | 80 |
+
+> Multi-node approach (separate IP per server)
+> has not yet been tested on Killercoda.
