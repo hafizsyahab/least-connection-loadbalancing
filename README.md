@@ -9,8 +9,8 @@
 ## 🎯 About This Repository
 
 This repository contains an interactive learning scenario
-based on a **published research** about *'Analysis load Balancing
- in Cloud Computing Using The Least Connection Method'*.
+based on a **published research** about *'Analysis of Load Balancing in Cloud Computing 
+Using the Least Connection Method'*.
 
 ---
 
@@ -126,8 +126,8 @@ apache-loadbalancing/
 
 This scenario is based on a published research paper:
 
-**"Analysis Load Balancing
- in Cloud Computing Using The Least Connection Method"**
+**"Analysis of Load Balancing in Cloud Computing 
+Using the Least Connection Method"**
 
 - **Author:** Abdurrahman Hafiz (09011381924112)
 - **Journal:** Jurnal Ilmu Komputer - NETPLG.COM
