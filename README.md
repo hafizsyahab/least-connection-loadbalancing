@@ -126,7 +126,7 @@ apache-loadbalancing/
 
 This scenario is based on a published research paper:
 
-**"Analysis load Balancing
+**"Analysis Load Balancing
  in Cloud Computing Using The Least Connection Method"**
 
 - **Author:** Abdurrahman Hafiz (09011381924112)
