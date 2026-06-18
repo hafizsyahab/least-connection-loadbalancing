@@ -5,18 +5,12 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-Server-orange)
 ![Killercoda](https://img.shields.io/badge/Killercoda-Interactive%20Lab-green)
 
+
 ## 🎯 About This Repository
 
 This repository contains an interactive learning scenario
-based on real undergraduate research about load balancing
-analysis in cloud computing using the **Least Connection** method.
-
-> **Research Title:**
-> "Analisa Load Balancing Pada Cloud Computing
-> Menggunakan Metode Least Connection"
->
-> Abdurrahman Hafiz (09011381924112)
-> Faculty of Computer Science, Sriwijaya University, 2026
+based on a **published research** about load balancing
+analysis in cloud computing using the Least Connection method.
 
 ---
 
@@ -125,6 +119,20 @@ apache-loadbalancing/
 | AWS | ⚠️ Not yet tested |
 | Azure | ⚠️ Not yet tested |
 | GCP | ⚠️ Not yet tested |
+
+---
+
+## 📄 Published Research
+
+This scenario is based on a published research paper:
+
+**"Analisa Load Balancing Pada Cloud Computing 
+Menggunakan Metode Least Connection"**
+
+- **Author:** Abdurrahman Hafiz (09011381924112)
+- **Journal:** Jurnal Ilmu Komputer - NETPLG.COM
+- **Volume:** Vol. 1 No. 1, Februari 2023
+- **URL:** https://jik.netplg.com/index.php/open/article/view/2
 
 ---
 
