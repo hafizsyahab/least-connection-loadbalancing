@@ -9,8 +9,8 @@
 ## 🎯 About This Repository
 
 This repository contains an interactive learning scenario
-based on a **published research** about load balancing
-analysis in cloud computing using the Least Connection method.
+based on a **published research** about analysis load balancing
+ in cloud computing using the Least Connection method.
 
 ---
 
